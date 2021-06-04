@@ -52,8 +52,9 @@
                 });
         }
 
-        setInterval(getChannelProfile(); getChannel();, delay);
-        odoo.default({el: subsOdometer, from: '0', to: subsData,animationDelay: 1000});
+        setInterval(getChannel, delay);
+        setInterval(getChannelProfile, delay);
+        odoo.default({ el: subsOdometer, from: '0', to: subsData, animationDelay: 1000 });
 
 
 
