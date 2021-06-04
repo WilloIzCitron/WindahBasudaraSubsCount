@@ -28,7 +28,7 @@
         //your Youtube API V3 Token
         const YoutubeAPIToken = "AIzaSyAS-12hHIYWkaDV9fZ0uY9fsJMRgIFQSBM"
         //Time Delay in seconds
-        const delay = 7000
+        const delay = 1000
 
         let getChannel = () => {
             fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${YoutubeChannel}&key=${YoutubeAPIToken}`)
@@ -37,10 +37,6 @@
                 })
                 .then(data => {
                     const subsData = data["items"][0].statistics.subscriberCount
-                    odoo.default({
-                        el: subsOdometer, from: '0', to: subsData,
-                        animationDelay: 1000
-                    });
                 })
         }
 
@@ -56,10 +52,12 @@
                 });
         }
 
-
+        setInterval(
         getChannelProfile();
 
         getChannel();
+        , delay);
+        odoo.default({el: subsOdometer, from: '0', to: subsData,animationDelay: 1000});
 
 
 
