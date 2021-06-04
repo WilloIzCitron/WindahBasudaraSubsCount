@@ -30,6 +30,8 @@
         //Time Delay in seconds
         const delay = 1000
 
+        let firsttime = true
+
         let getChannel = () => {
             fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${YoutubeChannel}&key=${YoutubeAPIToken}`)
                 .then(response => {
@@ -37,6 +39,10 @@
                 })
                 .then(data => {
                     const subsData = data["items"][0].statistics.subscriberCount
+                    if (firsttime) {
+                        odoo.default({ el: subsOdometer, from: '0', to: subsData, animationDelay: 1000 });
+                        firsttime = false
+                    }
                 })
         }
 
@@ -54,7 +60,6 @@
 
         setInterval(getChannel, delay);
         setInterval(getChannelProfile, delay);
-        odoo.default({ el: subsOdometer, from: '0', to: subsData, animationDelay: 1000 });
 
 
 
