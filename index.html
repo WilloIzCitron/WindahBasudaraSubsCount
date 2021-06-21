@@ -61,7 +61,7 @@
 
         let getChannelData = () => {
             if (useID == true) {
-                fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${YoutubeChannel}&fields=items%2Fsnippet%2Fthumbnails&key=${YoutubeAPIToken}`)
+                fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${YoutubeChannel}&key=${YoutubeAPIToken}`)
                     .then(response => {
                         return response.json()
                     })
@@ -73,7 +73,7 @@
                         console.log(data)
                     })
             } else {
-                fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet&q=${YoutubeChannel}&fields=items%2Fsnippet%2Fthumbnails&key=${YoutubeAPIToken}`)
+                fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet&q=${YoutubeChannel}&key=${YoutubeAPIToken}`)
                     .then(response => {
                         return response.json()
                     })
