@@ -73,7 +73,7 @@
                         ProfilePicture.src = profileData
                         youtuberName.innerHTML = channelName
 
-                    });
+                    })
             } else {
                 fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet&q=${YoutubeChannel}&fields=items%2Fsnippet%2Fthumbnails&key=${YoutubeAPIToken}`)
                     .then(response => {
@@ -84,7 +84,7 @@
                         const profileData = data["items"][0].snippet.thumbnails.high.url
                         ProfilePicture.src = profileData
                         youtuberName.innerHTML = channelName
-                    }
+                    })
             }
         }
 
