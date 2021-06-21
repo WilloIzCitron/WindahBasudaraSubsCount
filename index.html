@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="odometer-style.css">
 
@@ -14,7 +13,7 @@
 
 <body>
     <img class="pfp"></img>
-    <p>Windah Basudara</p>
+    <p class="youtubername">undefined</p>
     <h1>Current Subs</h1>
     <div class="subs-odometer" id="subs-odometer">0</div>
 
@@ -22,6 +21,7 @@
     <script>
         const subsOdometer = document.querySelector(".subs-odometer");
         const ProfilePicture = document.querySelector(".pfp");
+        const youtuberName = document.querySelector(".youtubername");
 
 
         //your youtube channel id
@@ -31,6 +31,8 @@
         //Time Delay in seconds
         const delay = 4000
 
+        const useID = true
+
         let firsttime = true
 
         const odometer = new Odometer({
@@ -38,31 +40,57 @@
         })
 
         let getChannel = () => {
-            fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${YoutubeChannel}&key=${YoutubeAPIToken}`)
-                .then(response => {
-                    return response.json()
-                })
-                .then(data => {
-                    const subsData = data["items"][0].statistics.subscriberCount
-                    setTimeout(function () { subsOdometer.innerHTML = subsData })
-                })
+            if (useID == true) {
+                fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${YoutubeChannel}&key=${YoutubeAPIToken}`)
+                    .then(response => {
+                        return response.json()
+                    })
+                    .then(data => {
+                        const subsData = data["items"][0].statistics.subscriberCount
+                        setTimeout(function () { subsOdometer.innerHTML = subsData })
+                    })
+            } else {
+                fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&q=${YoutubeChannel}&key=${YoutubeAPIToken}`)
+                    .then(response => {
+                        return response.json()
+                    })
+                    .then(data => {
+                        const subsData = data["items"][0].statistics.subscriberCount
+                        setTimeout(function () { subsOdometer.innerHTML = subsData })
+                    })
+            }
         }
 
-        let getChannelProfile = () => {
-            fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${YoutubeChannel}&fields=items%2Fsnippet%2Fthumbnails&key=${YoutubeAPIToken}`)
-                .then(response => {
-                    return response.json()
-                })
-                .then(data => {
-                    const profileData = data["items"][0].snippet.thumbnails.high.url
-                    ProfilePicture.src = profileData
+        let getChannelData = () => {
+            if (useID == true) {
+                fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${YoutubeChannel}&fields=items%2Fsnippet%2Fthumbnails&key=${YoutubeAPIToken}`)
+                    .then(response => {
+                        return response.json()
+                    })
+                    .then(data => {
+                        const channelName = data["items"][0].snippet.title
+                        const profileData = data["items"][0].snippet.thumbnails.high.url
+                        ProfilePicture.src = profileData
+                        youtuberName.innerHTML = channelName
 
-                });
+                    });
+            } else {
+                fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet&q=${YoutubeChannel}&fields=items%2Fsnippet%2Fthumbnails&key=${YoutubeAPIToken}`)
+                    .then(response => {
+                        return response.json()
+                    })
+                    .then(data => {
+                        const channelName = data["items"][0].snippet.title
+                        const profileData = data["items"][0].snippet.thumbnails.high.url
+                        ProfilePicture.src = profileData
+                        youtuberName.innerHTML = channelName
+                    }
+            }
         }
 
 
         setInterval(getChannel, delay);
-        setInterval(getChannelProfile, delay);
+        setInterval(getChannelData, delay);
 
 
 
