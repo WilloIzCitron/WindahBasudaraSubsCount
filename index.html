@@ -13,7 +13,7 @@
 
 <body>
     <img class="pfp"></img>
-    <p class="youtubername">undefined</p>
+    <p class="youtuber-name">undefined</p>
     <h1>Current Subs</h1>
     <div class="subs-odometer" id="subs-odometer">0</div>
 
@@ -21,7 +21,7 @@
     <script>
         const subsOdometer = document.querySelector(".subs-odometer");
         const ProfilePicture = document.querySelector(".pfp");
-        const youtuberName = document.querySelector(".youtubername");
+        const youtuberName = document.querySelector(".youtuber-name");
 
 
         //your youtube channel id
@@ -32,8 +32,6 @@
         const delay = 4000
 
         const useID = true
-
-        let firsttime = true
 
         const odometer = new Odometer({
             el: subsOdometer,
